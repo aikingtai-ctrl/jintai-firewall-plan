@@ -1,0 +1,29 @@
+version: "3.9"
+
+# ============================================================================
+# 金泰 AI 内容安全防火墙网关 (:4300) 容器编排配置
+# 嵌入位置：平台编排层 (:4100) 与双网关 (LiteLLM :4000 / 渲染网关 :4200) 之间
+# ============================================================================
+
+services:
+  jintai-firewall-gateway:
+    image: python:3.11-slim
+    container_name: jintai-firewall-gateway-4300
+    working_dir: /app
+    restart: always
+    ports:
+      - "4300:4300"
+    env_file:
+      - .env.firewall.example
+    volumes:
+      - ./:/app
+      - ./firewall_data:/app/data
+    command: >
+      sh -c "apt-get update && apt-get install -y --no-install-recommends ffmpeg &&
+             pip install --no-cache-dir fastapi uvicorn pydantic alibabacloud_green20220302 alibabacloud_tea_openapi &&
+             python jintai_firewall_gateway.py --serve --host 0.0.0.0 --port 4300"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4300/v1/guard/status')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
