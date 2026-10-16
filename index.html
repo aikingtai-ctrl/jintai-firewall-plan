@@ -184,65 +184,9 @@ strong { color: #a01118; }
 </div>
 
 <hr />
-<h2 id="ipgodip-guard-ai">一、 核心结论先行：为什么已安装的「IPGOD（IP-guard）桌管软件」不能做 AI 平台防火墙？</h2>
-<p>您提到的 <strong>“IPGOD 桌管软件”</strong> 即国内溢信科技出品的 <strong>IP-guard 企业终端安全管理系统</strong>（国内主流内网防泄密 DLP 与员工电脑桌面行为管理软件）。</p>
-<p>经过对其底层架构与金泰 AI 平台业务流向的严格技术核验，核心结论如下：</p>
-<blockquote>
-<p><strong>【明确结论】IP-guard 绝对不能充当金泰 AI 平台的对外内容安全审核防火墙。</strong>
-<strong>二者属于完全不同的安全赛道：IP-guard 管的是“公司内部员工电脑不把机密文件发出去”，而金泰 AI 平台需要的是“架设在服务器 API 网关上的 AI 多模态内容实时审查与阻断引擎”。</strong></p>
-</blockquote>
-<h3 id="11-ip-guard-ai">1.1 IP-guard 无法胜任 AI 平台内容审核的五大硬伤</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">对比维度</th>
-<th style="text-align: left;">已安装的 IP-guard 桌管软件</th>
-<th style="text-align: left;">金泰 AI 平台所需「AI 内容安全防火墙」</th>
-<th style="text-align: left;">强行用 IP-guard 的后果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>1. 管控对象与部署位置</strong></td>
-<td style="text-align: left;">必须在每台受控 Windows/Mac 办公电脑上安装<strong>客户端 Agent（内核驱动挂钩）</strong>，只管公司内网员工电脑</td>
-<td style="text-align: left;">架设在<strong>金泰平台服务端网关层</strong>，面向成千上万通过浏览器网页（HTTPS）或 API 接入的<strong>外部创作者与公网用户</strong></td>
-<td style="text-align: left;"><strong>根本管不到外部用户</strong>：不可能要求外部 3,000 名创作者或公网用户在自己电脑上装公司内网监控端</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>2. 图片与视频审核能力</strong></td>
-<td style="text-align: left;"><strong>无 AI 视觉识别能力</strong>。仅支持对员工微信/网页聊天截图留痕、按文件后缀（<code>.mp4</code>/<code>.jpg</code>）禁发或按文件 MD5 阻断</td>
-<td style="text-align: left;">必须具备<strong>深度学习计算机视觉（CV/VLM）</strong>：看懂 AI 刚画出来的图或视频里有没有<strong>政治人物脸部、裸露色情、断肢血腥、吸毒冰壶</strong></td>
-<td style="text-align: left;"><strong>对画面内容完全失明</strong>：AI 生成的涉黄、涉政、血腥图片和视频可 100% 畅通无阻地从网页端导出</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>3. 文字审核机理</strong></td>
-<td style="text-align: left;">基于传统的<strong>死板关键词字面匹配 + 正则表达式</strong>（主要查合同编号、机密字样、财务数据）</td>
-<td style="text-align: left;">必须具备<strong>变体还原（谐音/拆字/暗语）+ 大模型语义理解（防角色扮演越狱 Jailbreak 与提示词注入）</strong></td>
-<td style="text-align: left;">恶意用户用同音字、隐喻或角色扮演即可轻松绕过；而正常武侠剧写个“杀”字反而被死板拦截</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>4. 接口与流式阻断能力</strong></td>
-<td style="text-align: left;">基于操作系统文件 I/O 与网卡驱动阻断，不支持高并发 REST API 与大模型流式输出（SSE）实时截断</td>
-<td style="text-align: left;">嵌入在 <code>:4100</code> 编排层、<code>:4000</code> LiteLLM 与 <code>:4200</code> 渲染网关之间，<strong>输入毫秒级拒单（省算力）、输出未过审绝不放行 URL</strong></td>
-<td style="text-align: left;">无法在调用 H100 显卡前拦截违规任务，导致昂贵 GPU 算力被违规请求白白烧光</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>5. 国家 AIGC 法定合规</strong></td>
-<td style="text-align: left;">满足企业内部等保/防泄密审计，<strong>无网信办生成式 AI 备案认可的涉政人脸底库与 GB 45438 合成标识能力</strong></td>
-<td style="text-align: left;">必须满足《生成式人工智能服务管理暂行办法》《人工智能生成合成内容标识办法》（GB 45438-2025）显隐式水印与 6 个月审核日志留存</td>
-<td style="text-align: left;">平台对外开放面临网信/广电监管处罚及 MiniMax H3 商用许可证（V.5 条款）违约风险</td>
-</tr>
-</tbody>
-</table>
-<h3 id="12-ip-guard">1.2 IP-guard 的正确定位（留用建议）</h3>
-<ul>
-<li><strong>保留在内网办公端</strong>：继续在公司内部员工办公电脑上运行 IP-guard，专门负责<strong>内网防泄密（DLP）</strong>——防止内部员工通过 U 盘、私人微信或网盘外泄公司未公开的 AI 剧集母片、核心工作流代码、客户合同与财务底账。</li>
-<li><strong>严禁装上算力与平台服务器</strong>：切勿将 IP-guard 客户端安装到 A 机（<code>172.16.0.10</code>）、B 机（<code>172.16.0.8</code>）或平台服务器（<code>172.16.0.114</code>），否则其底层文件落地扫描 Hook 会严重拖慢高并发视频渲染与容器 I/O。</li>
-</ul>
-<hr />
-<h2 id="ai_1">二、 金泰 AI 平台内容防火墙最佳架构设计：「双闸四道防线 + 本地/云端两级漏斗」</h2>
+<h2 id="ai_1">一、 金泰 AI 平台内容防火墙最佳架构设计：「双闸四道防线 + 本地/云端两级漏斗」</h2>
 <p>结合金泰平台现有的<strong>双网关架构（编排服务 <code>:4100</code> → LiteLLM 对话网关 <code>:4000</code> + 异步渲染网关 <code>:4200</code> → A/B 机 H100/5090 集群与云端 API）</strong>，最佳方案不是买一台传统硬件防火墙，而是<strong>在平台服务端嵌入独立的【金泰 AI 内容安全防火墙服务（Jintai Guardrail Gateway，端口 <code>:4300</code>）】</strong>。</p>
-<h3 id="21">2.1 全链路架构拓扑图</h3>
+<h3 id="21">1.1 全链路架构拓扑图</h3>
 
 <div class="figure">
 <svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:2px solid #d8d3cb;border-radius:8px;background:#faf9f7;">
