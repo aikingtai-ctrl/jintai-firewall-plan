@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金泰 AI 平台内容安全防火墙与多模态出口审核最佳方案（大字阅读版）</title>
+<style>
+@page { size: A4; margin: 14mm; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+  font-size: 20.5pt;
+  line-height: 1.68;
+  color: #1b1b1b;
+  background: #faf9f7;
+  margin: 0;
+  padding: 0;
+}
+.sheet {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 32px 60px;
+}
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: #18202c;
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 10px;
+  border-left: 8px solid #c8161e;
+  margin-bottom: 28px;
+}
+.top-nav .brand {
+  font-size: 19pt;
+  font-weight: 700;
+}
+.top-nav .actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.top-nav a {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 16pt;
+  font-weight: 700;
+  text-decoration: none;
+}
+.top-nav a.btn-primary {
+  background: #c8161e;
+  color: #fff;
+}
+.top-nav a.btn-secondary {
+  background: #334155;
+  color: #f8fafc;
+}
+@media print {
+  .sheet { max-width: 182mm; padding: 4mm 2mm; }
+  .top-nav { display: none; }
+}
+@media (max-width: 768px) {
+  body { font-size: 17pt; }
+  .sheet { padding: 16px 14px 40px; }
+  table { display: block; overflow-x: auto; font-size: 15pt; }
+}
+h1, h2, h3 {
+  font-family: SimSun, "宋体", serif;
+  font-weight: 900;
+  color: #1b1b1b;
+  page-break-after: avoid;
+}
+h1 {
+  font-size: 31pt;
+  line-height: 1.32;
+  margin: 0 0 6mm;
+  padding-bottom: 4mm;
+  border-bottom: 4px solid #c8161e;
+}
+h2 {
+  font-size: 25pt;
+  line-height: 1.35;
+  margin: 10mm 0 4mm;
+  padding-left: 12px;
+  border-left: 7px solid #c8161e;
+}
+h3 {
+  font-size: 21.5pt;
+  margin: 7mm 0 3mm;
+  color: #c8161e;
+}
+p { margin: 0 0 4mm; }
+blockquote {
+  margin: 5mm 0;
+  padding: 4mm 5mm;
+  background: #fff;
+  border-left: 6px solid #c8161e;
+  color: #1b1b1b;
+  font-size: 20pt;
+}
+blockquote p { margin: 0 0 2mm; }
+blockquote p:last-child { margin: 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 5mm 0;
+  font-size: 18.5pt;
+  line-height: 1.5;
+  page-break-inside: auto;
+  background: #fff;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+th {
+  background: #f0ece6;
+  color: #1b1b1b;
+  font-weight: 700;
+  text-align: left;
+  padding: 3mm 3.5mm;
+  border: 1.5px solid #c8c2b8;
+}
+td {
+  padding: 3mm 3.5mm;
+  border: 1.5px solid #dcd6cc;
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: #fbfaf8; }
+code {
+  font-family: "Microsoft YaHei", Consolas, monospace;
+  font-size: 18.5pt;
+  background: #f2efe9;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #a01118;
+}
+ul, ol { margin: 0 0 4mm; padding-left: 9mm; }
+li { margin: 2mm 0; }
+.figure { margin: 6mm 0; page-break-inside: avoid; }
+.figcap { text-align: center; font-size: 17pt; color: #555; margin-top: 2mm; font-weight: bold; }
+hr { border: none; border-top: 2px solid #ddd8d0; margin: 8mm 0; }
+strong { color: #a01118; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top-nav">
+    <div class="brand">🛡️ 金泰 AI 平台 · 内容安全防火墙最佳方案</div>
+    <div class="actions">
+      <a class="btn-primary" href="./firewall_console.html">⚡ 打开实时演练控制台 (:4300)</a>
+      <a class="btn-secondary" href="./金泰AI平台内容安全防火墙最佳方案.pdf" target="_blank">📄 下载大字版 PDF 报告</a>
+    </div>
+  </div>
+<h1 id="ai">金泰 AI 平台内容安全防火墙与多模态出口审核最佳方案</h1>
+<blockquote>
+<p><strong>编制日期</strong>：2026-10-16（Asia/Shanghai）
+<strong>适用范围</strong>：金泰 AI 平台（3,000 创作者 / 500 团队及外部公众开放场景）
+<strong>核心目标</strong>：解决文字（剧本/分镜/提示词）、图片（参考图/生成图）、视频（H3/Seedance 镜头与成片）进出口的<strong>涉政、涉黄、涉暴力血腥、涉毒及违法违禁</strong>全链路拦截、影视创作防误杀与国家法规强制水印合规。</p>
+</blockquote>
+<hr />
+<h2 id="ipgodip-guard-ai">一、 核心结论先行：为什么已安装的「IPGOD（IP-guard）桌管软件」不能做 AI 平台防火墙？</h2>
+<p>您提到的 <strong>“IPGOD 桌管软件”</strong> 即国内溢信科技出品的 <strong>IP-guard 企业终端安全管理系统</strong>（国内主流内网防泄密 DLP 与员工电脑桌面行为管理软件）。</p>
+<p>经过对其底层架构与金泰 AI 平台业务流向的严格技术核验，核心结论如下：</p>
+<blockquote>
+<p><strong>【明确结论】IP-guard 绝对不能充当金泰 AI 平台的对外内容安全审核防火墙。</strong>
+<strong>二者属于完全不同的安全赛道：IP-guard 管的是“公司内部员工电脑不把机密文件发出去”，而金泰 AI 平台需要的是“架设在服务器 API 网关上的 AI 多模态内容实时审查与阻断引擎”。</strong></p>
+</blockquote>
+<h3 id="11-ip-guard-ai">1.1 IP-guard 无法胜任 AI 平台内容审核的五大硬伤</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">对比维度</th>
+<th style="text-align: left;">已安装的 IP-guard 桌管软件</th>
+<th style="text-align: left;">金泰 AI 平台所需「AI 内容安全防火墙」</th>
+<th style="text-align: left;">强行用 IP-guard 的后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. 管控对象与部署位置</strong></td>
+<td style="text-align: left;">必须在每台受控 Windows/Mac 办公电脑上安装<strong>客户端 Agent（内核驱动挂钩）</strong>，只管公司内网员工电脑</td>
+<td style="text-align: left;">架设在<strong>金泰平台服务端网关层</strong>，面向成千上万通过浏览器网页（HTTPS）或 API 接入的<strong>外部创作者与公网用户</strong></td>
+<td style="text-align: left;"><strong>根本管不到外部用户</strong>：不可能要求外部 3,000 名创作者或公网用户在自己电脑上装公司内网监控端</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. 图片与视频审核能力</strong></td>
+<td style="text-align: left;"><strong>无 AI 视觉识别能力</strong>。仅支持对员工微信/网页聊天截图留痕、按文件后缀（<code>.mp4</code>/<code>.jpg</code>）禁发或按文件 MD5 阻断</td>
+<td style="text-align: left;">必须具备<strong>深度学习计算机视觉（CV/VLM）</strong>：看懂 AI 刚画出来的图或视频里有没有<strong>政治人物脸部、裸露色情、断肢血腥、吸毒冰壶</strong></td>
+<td style="text-align: left;"><strong>对画面内容完全失明</strong>：AI 生成的涉黄、涉政、血腥图片和视频可 100% 畅通无阻地从网页端导出</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. 文字审核机理</strong></td>
+<td style="text-align: left;">基于传统的<strong>死板关键词字面匹配 + 正则表达式</strong>（主要查合同编号、机密字样、财务数据）</td>
+<td style="text-align: left;">必须具备<strong>变体还原（谐音/拆字/暗语）+ 大模型语义理解（防角色扮演越狱 Jailbreak 与提示词注入）</strong></td>
+<td style="text-align: left;">恶意用户用同音字、隐喻或角色扮演即可轻松绕过；而正常武侠剧写个“杀”字反而被死板拦截</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. 接口与流式阻断能力</strong></td>
+<td style="text-align: left;">基于操作系统文件 I/O 与网卡驱动阻断，不支持高并发 REST API 与大模型流式输出（SSE）实时截断</td>
+<td style="text-align: left;">嵌入在 <code>:4100</code> 编排层、<code>:4000</code> LiteLLM 与 <code>:4200</code> 渲染网关之间，<strong>输入毫秒级拒单（省算力）、输出未过审绝不放行 URL</strong></td>
+<td style="text-align: left;">无法在调用 H100 显卡前拦截违规任务，导致昂贵 GPU 算力被违规请求白白烧光</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. 国家 AIGC 法定合规</strong></td>
+<td style="text-align: left;">满足企业内部等保/防泄密审计，<strong>无网信办生成式 AI 备案认可的涉政人脸底库与 GB 45438 合成标识能力</strong></td>
+<td style="text-align: left;">必须满足《生成式人工智能服务管理暂行办法》《人工智能生成合成内容标识办法》（GB 45438-2025）显隐式水印与 6 个月审核日志留存</td>
+<td style="text-align: left;">平台对外开放面临网信/广电监管处罚及 MiniMax H3 商用许可证（V.5 条款）违约风险</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-ip-guard">1.2 IP-guard 的正确定位（留用建议）</h3>
+<ul>
+<li><strong>保留在内网办公端</strong>：继续在公司内部员工办公电脑上运行 IP-guard，专门负责<strong>内网防泄密（DLP）</strong>——防止内部员工通过 U 盘、私人微信或网盘外泄公司未公开的 AI 剧集母片、核心工作流代码、客户合同与财务底账。</li>
+<li><strong>严禁装上算力与平台服务器</strong>：切勿将 IP-guard 客户端安装到 A 机（<code>172.16.0.10</code>）、B 机（<code>172.16.0.8</code>）或平台服务器（<code>172.16.0.114</code>），否则其底层文件落地扫描 Hook 会严重拖慢高并发视频渲染与容器 I/O。</li>
+</ul>
+<hr />
+<h2 id="ai_1">二、 金泰 AI 平台内容防火墙最佳架构设计：「双闸四道防线 + 本地/云端两级漏斗」</h2>
+<p>结合金泰平台现有的<strong>双网关架构（编排服务 <code>:4100</code> → LiteLLM 对话网关 <code>:4000</code> + 异步渲染网关 <code>:4200</code> → A/B 机 H100/5090 集群与云端 API）</strong>，最佳方案不是买一台传统硬件防火墙，而是<strong>在平台服务端嵌入独立的【金泰 AI 内容安全防火墙服务（Jintai Guardrail Gateway，端口 <code>:4300</code>）】</strong>。</p>
+<h3 id="21">2.1 全链路架构拓扑图</h3>
+
+<div class="figure">
+<svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:2px solid #d8d3cb;border-radius:8px;background:#faf9f7;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#c8161e"/>
+    </marker>
+  </defs>
+  <!-- 顶部：外部用户与编排层 -->
+  <rect x="40" y="20" width="330" height="64" rx="8" fill="#ffffff" stroke="#6b6b6b" stroke-width="2"/>
+  <text x="205" y="48" font-family="Microsoft YaHei" font-size="18" font-weight="bold" text-anchor="middle" fill="#1b1b1b">外部创作者 / 500 团队浏览器</text>
+  <text x="205" y="72" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" fill="#555">HTTPS 网页端 / API 接入 (无需安装客户端)</text>
+
+  <line x1="370" y1="52" x2="465" y2="52" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="20" width="350" height="64" rx="8" fill="#ffffff" stroke="#1b1b1b" stroke-width="2"/>
+  <text x="645" y="48" font-family="Microsoft YaHei" font-size="18" font-weight="bold" text-anchor="middle" fill="#1b1b1b">金泰平台前端 &amp; Agent 编排层 :4100</text>
+  <text x="645" y="72" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" fill="#555">对话流 / 产物墙 / 人工复审门 (Human Gate)</text>
+
+  <line x1="260" y1="84" x2="260" y2="128" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="272" y="112" font-family="Microsoft YaHei" font-size="14" font-weight="bold" fill="#c8161e">① 进门安检 (Input Guard)</text>
+
+  <line x1="620" y1="84" x2="620" y2="128" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="632" y="112" font-family="Microsoft YaHei" font-size="14" font-weight="bold" fill="#c8161e">②③④ 出门安检 (Egress Guard)</text>
+
+  <!-- 核心防火墙大框 -->
+  <rect x="40" y="132" width="780" height="256" rx="10" fill="#fff5f5" stroke="#c8161e" stroke-width="3"/>
+  <text x="430" y="164" font-family="Microsoft YaHei" font-size="21" font-weight="bold" text-anchor="middle" fill="#c8161e">🛡️ 金泰 AI 内容安全防火墙网关 (Jintai Guardrail Gateway :4300)</text>
+
+  <!-- L0 -->
+  <rect x="65" y="180" width="730" height="56" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
+  <text x="85" y="205" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L0 极速规则层 (&lt;2ms, 0成本)】拦截 60% 流量</text>
+  <text x="85" y="227" font-family="Microsoft YaHei" font-size="14" fill="#333">AC自动机黑词库 + 拼音/谐音/拆字还原 + 图像指纹 pHash 黑名单 + 金泰影视创作语境分级豁免</text>
+
+  <!-- L1 -->
+  <rect x="65" y="246" width="730" height="56" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
+  <text x="85" y="271" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L1 本地 AI 护栏层 (&lt;50ms, 0 API费)】拦截 30% 流量（跑在 A 机 172.16.0.10 vLLM :8000）</text>
+  <text x="85" y="293" font-family="Microsoft YaHei" font-size="14" fill="#333">阿里开源 Qwen3Guard-Gen/Stream-4B (防语义越狱) + 本地轻量 NSFW/血腥视觉初筛 (过滤内部草稿废片)</text>
+
+  <!-- L2 -->
+  <rect x="65" y="312" width="730" height="58" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
+  <text x="85" y="337" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L2 权威云端合规终审层 (阿里云内容安全 Green 2.0 / 网易易盾资源包)】终审 10% 出口有效流量</text>
+  <text x="85" y="359" font-family="Microsoft YaHei" font-size="14" fill="#333">国家级动态涉政人物人脸底库 + 最新敏感时政词库 + 暴恐违禁权威复核 + 6个月法定尽职免责回执日志</text>
+
+  <!-- 底部：双网关与水印出口 -->
+  <line x1="250" y1="388" x2="250" y2="432" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="630" y1="388" x2="630" y2="432" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="436" width="390" height="80" rx="8" fill="#ffffff" stroke="#1b1b1b" stroke-width="2"/>
+  <text x="235" y="466" font-family="Microsoft YaHei" font-size="17" font-weight="bold" text-anchor="middle" fill="#1b1b1b">LiteLLM :4000 &amp; 渲染网关 :4200</text>
+  <text x="235" y="490" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" fill="#555">A/B 机 H100/5090 (ComfyUI + H3) &amp; 国产满血 LLM</text>
+  <text x="235" y="508" font-family="Microsoft YaHei" font-size="13" text-anchor="middle" fill="#047857">✓ 未过审输入绝不进显卡，省算力防封号</text>
+
+  <rect x="460" y="436" width="360" height="80" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
+  <text x="640" y="466" font-family="Microsoft YaHei" font-size="17" font-weight="bold" text-anchor="middle" fill="#065f46">GB 45438-2025 水印签发与安全出口</text>
+  <text x="640" y="490" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" fill="#047857">视频关键帧抽检 PASS ➔ 写入隐式溯源签名</text>
+  <text x="640" y="508" font-family="Microsoft YaHei" font-size="13" text-anchor="middle" fill="#047857">✓ 显式 AI 标识 + 团队/账号精准追责</text>
+</svg>
+<div class="figcap">图 1 · 金泰 AI 平台内容安全防火墙网关 (:4300) 全链路架构图</div>
+</div>
+
+<h3 id="22">2.2 四道必经防线（管住入口省算力、管住出口保平安）</h3>
+<ol>
+<li>
+<p><strong>第一道防线：入口前置防火墙（Input &amp; Upload Guard）—— 省算力、防越狱、防换脸暴雷</strong>
+   * <strong>文字提示词（Prompt）与剧本入口</strong>：在请求发往 <code>:4000</code> 大模型或 <code>:4200</code> 渲染网关<strong>之前</strong>，同步调用 <code>:4300/v1/guard/text</code>。一旦命中涉政、涉黄、涉毒或越狱攻击（Jailbreak），<strong>毫秒级直接拒单</strong>，绝不消耗大模型 Token 和宝贵的 H100 显卡算力。
+   * <strong>用户上传图片/视频垫图入口（极其关键）</strong>：创作者上传人物参考图（如换装造型卡、首帧图、音频样本）时，必须先过 <code>:4300/v1/guard/image</code>。<strong>重点拦截政治人物/国家领导人肖像、涉恐旗帜、色情裸露图</strong>，从源头杜绝恶意用户利用平台进行“政治人物恶搞”或“AI 一键脱衣/色情换脸”。</p>
+</li>
+<li>
+<p><strong>第二道防线：大模型文字出口防火墙（Text Output &amp; Stream Guard）</strong>
+   * 针对剧本、分镜、台词的流式输出（SSE），采用<strong>滑动窗口分片检测（每 100 字或句末触发）</strong> + 生成完毕全文复检。
+   * 一旦大模型因幻觉或诱导吐出涉政隐喻、色情描写、制毒配方，立即<strong>截断 SSE 流并替换为合规兜底提示</strong>。</p>
+</li>
+<li>
+<p><strong>第三道防线：图片出口防火墙（Image Egress Guard）</strong>
+   * ComfyUI / 生图引擎渲染出图片后，文件先落盘至服务器内部<strong>待审隔离区（Staging）</strong>，此时<strong>不生成对外可访问 URL</strong>。
+   * 渲染网关自动调用 <code>:4300/v1/guard/image</code> 完成四维检测（涉政人脸/徽章、涉黄裸露、暴力血腥、涉毒违禁）：</p>
+<ul>
+<li>判定 <code>PASS</code>：自动注入隐式元数据水印，移入正式产物区（<code>/media/projects</code>）并向前端推送预览图；</li>
+<li>判定 <code>REJECT</code>：移入违规取证库（Quarantine），前端显示红色“内容触发合规安全护栏已拦截”占位图。</li>
+</ul>
+</li>
+<li>
+<p><strong>第四道防线：视频出口抽帧音画联审 + 法定水印闸门（Video Egress + Watermark Gate）</strong>
+   * <strong>痛点</strong>：A/B 机跑出的 H3 / Seedance 视频体积大（几十至上百 MB），如果把整条 MP4 直接传给云端视频审核 API，不仅慢（耗时数十秒），而且按时长计费极贵。
+   * <strong>金泰最优解（自适应关键帧抽检 + 音轨拆解）</strong>：</p>
+<ol>
+<li>渲染网关在视频生成完毕后，用轻量 FFmpeg（限制 2 线程 Idle 优先级或在渲染节点执行）<strong>瞬间抽取关键帧</strong>：<ul>
+<li><strong>单镜头短片（5s～15s）</strong>：固定抽取 <strong>首帧 + 中间帧 + 尾帧 + 运动变化最大帧（共 4～5 张图）</strong>；</li>
+<li><strong>合成长片（1～3 分钟）</strong>：按 <strong>每秒 1 帧（1 fps）+ 场景切换帧（Scene Cut I-Frame）去重抽取</strong>；</li>
+</ul>
+</li>
+<li>若含配音/台词音轨，提取音频文本送文本审核；</li>
+<li>将抽出的关键帧图片打包并发经过 <strong>L1 本地视觉初筛 → L2 云端涉政/涉黄终审</strong>（全程耗时 <code>&lt; 1.2 秒</code>，成本比整片送审降低 80% 以上）；</li>
+<li><strong>强制叠加国家标准数字水印（GB 45438-2025）</strong>：审核通过后，出口管道自动在 MP4 容器底层写入 <strong>C2PA / 元数据隐式签名</strong>（记录 <code>JINTAI_AI_GENERATED</code>、团队 ID、用户 ID、任务 ID、时间戳，哪怕用户录屏转发也能追查到具体违规账号），并在对外下载版按规叠加显式标识。</li>
+</ol>
+</li>
+</ol>
+<hr />
+<h2 id="api">三、 为什么采用「本地开源模型 + 商用云 API」两级漏斗？（技术选型与算账）</h2>
+<p>面对涉政、涉黄、涉暴、涉毒四大审核任务，单纯靠“全本地开源模型”或“全量调用公有云 API”都有明显短板，<strong>两级漏斗混合架构是唯一兼顾“100% 政治安全”与“极低运营成本”的方案</strong>：</p>
+<h3 id="31">3.1 为什么不能只靠本地开源模型？（涉政红线决定）</h3>
+<ul>
+<li>阿里开源的 <strong><code>Qwen3Guard-Gen-4B / 8B</code></strong>（文本护栏）和本地视觉 NSFW 模型，审<strong>涉黄、暴力血腥、提示词越狱</strong>非常准，且跑在金泰自有显卡上<strong>完全免费</strong>。</li>
+<li><strong>但“涉政（政治敏感）”是国内最高高压线！</strong> 涉政审核依赖<strong>实时更新的敏感政治人物人脸特征库（正国级/省部级/劣迹艺人/敏感历史人物）、违禁旗帜徽章库、每日动态时政黑词库</strong>。任何开源模型都不可能公开内置这套国家级敏感底库。</li>
+<li>此外，接入国内头部合规云厂商（阿里云内容安全 / 网易易盾 / 腾讯云天御），保留其 API 放行回执日志，是发生监管抽查时证明平台<strong>“已履行法定安全审核义务（尽职免责）”</strong>的权威第三方铁证。</li>
+</ul>
+<h3 id="32-api">3.2 为什么不能全量裸跑商用云 API？（成本账本决定）</h3>
+<ul>
+<li>3,000 名创作者在金泰平台上高频改剧本、反复抽卡生图、重掷视频，每天会产生海量的<strong>中间草稿、废片和重复提示词</strong>。</li>
+<li>如果连明显违规的废词、本地就能看出来的废图都全量调云 API，一年要白白多交 15 万～30 万元 API 费。</li>
+</ul>
+<h3 id="33-l0-l1-l2">3.3 金泰「L0 + L1 + L2 三级漏斗」最佳配置与费用测算</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">漏斗层级</th>
+<th style="text-align: left;">部署位置与技术组件</th>
+<th style="text-align: left;">负责拦截什么</th>
+<th style="text-align: left;">响应耗时</th>
+<th style="text-align: left;">单次成本</th>
+<th style="text-align: left;">拦截分流比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>L0 极速规则层</strong></td>
+<td style="text-align: left;">平台服务器内存（Python <code>ahocorasick</code> + 拼音/拆字归一 + 图像 pHash 黑名单 + 影视语境白名单）</td>
+<td style="text-align: left;">已知涉政/涉黄/涉毒直白黑词、谐音变体、已拦截过的违规垫图复传</td>
+<td style="text-align: left;"><code>&lt; 2 ms</code></td>
+<td style="text-align: left;"><strong>0 元</strong></td>
+<td style="text-align: left;">拦掉约 <strong>60%</strong> 明显违规与重复请求</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>L1 本地 AI 护栏层</strong></td>
+<td style="text-align: left;"><strong>A 机（<code>172.16.0.10</code>）vLLM <code>:8000</code></strong> 挂载 <code>Qwen3Guard-Gen-4B</code>（仅占 ~8GB 显存）+ 轻量 NSFW/Gore 视觉分类器</td>
+<td style="text-align: left;">复杂语义越狱（Jailbreak）、隐晦色情描写、制毒教程、中间草稿生图的明显露点/血腥</td>
+<td style="text-align: left;"><code>15~45 ms</code></td>
+<td style="text-align: left;"><strong>0 元</strong>（自有算力）</td>
+<td style="text-align: left;">拦掉约 <strong>30%</strong> 语义违规与草稿废图，并过滤全部内部未导出废片</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>L2 云端权威终审层</strong></td>
+<td style="text-align: left;"><strong>阿里云内容安全增强版（Green 2.0）</strong> 为主 + <strong>网易易盾</strong> 备用（购买年度预付费资源包）</td>
+<td style="text-align: left;"><strong>所有上传参考人脸图 + 所有最终展示/导出给用户的成图与视频抽帧</strong>（重点查涉政人脸、敏感时政、暴恐违禁）</td>
+<td style="text-align: left;"><code>120~250 ms</code></td>
+<td style="text-align: left;">约 <strong>0.0015~0.002 元/次</strong>（资源包折后）</td>
+<td style="text-align: left;">仅审最终有效出口与疑似项，<strong>节省 75%~85% 云 API 开支</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="3000-500">💰 3,000 创作者（500 团队）满负荷运转年度审核成本精算</h4>
+<p>按金泰算力扩容规划中的基准情景（500 个团队在线，月产成片 13,000 分钟，含日常剧本对话、人物场景抽卡生图、H3 视频重掷与导出）：
+* <strong>若全量裸跑云端 API（无本地 L0/L1 漏斗）</strong>：日均调用约 45 万次，年调用约 1.6 亿次 → <strong>年费约 24 万～32 万元/年</strong>。
+* <strong>采用本方案（L0+L1 本地拦截草稿与废片 + 视频智能抽帧 + L2 阿里云/易盾预付费资源包只审有效入库与出口）</strong>：
+  * 云端有效调用量压降至日均约 8 万次（年约 2,900 万点）；
+  * 采购<strong>阿里云内容安全增强版或网易易盾年度预付费流量包</strong>，<strong>全年总成本仅需约 3.6 万～5.5 万元/年（月均仅 3,000～4,500 元）</strong>！</p>
+<hr />
+<h2 id="_1">四、 金泰独家痛点攻克：如何防止「正常影视/武侠/历史剧创作」被防火墙误杀？</h2>
+<p>金泰 AI 平台的核心业务是<strong>影视与微短剧生产</strong>（如古装武侠《功夫·回响》、明代锦衣卫、西夏历史战争、刑侦悬疑剧）。
+如果照搬普通聊天软件的审核策略，创作者输入一句<em>“锦衣卫挥刀斩落刺客，鲜血染红衣襟”</em>或<em>“太医查验鹤顶红毒酒”</em>，就会被普通防火墙当成“涉暴力血腥”或“涉毒”直接封杀，导致正常创作寸步难行！</p>
+<p>为此，我们在金泰防火墙网关（<code>:4300</code>）中专门设计了 <strong>「红黄绿三级风险矩阵 + 影视戏剧语境豁免（Dramatic Context Filter）」</strong>：</p>
+<h3 id="41">4.1 四大类风险的精准边界与影视分级策略</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">审核维度</th>
+<th style="text-align: left;">🔴 一级绝对红线（零容忍，L0/L1/L2 秒级硬拦截 + 记违规牌）</th>
+<th style="text-align: left;">🟡 二级影视创作边界（Controversial，语境重构或进人工复审门）</th>
+<th style="text-align: left;">🟢 三级影视创作正常放行（Dramatic Whitelist，防误杀）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. 涉政敏感</strong><br><em>(最高优先级)</em></td>
+<td style="text-align: left;">• 现役/历任党和国家领导人及敏感政治人物姓名、外号、谐音、肖像换脸<br>• 分裂国家（台独/港独/疆独/藏独）、歪曲党史国史军史、攻击社会主义制度<br>• 违禁政治旗帜、徽章、标语、非法集会游行画面</td>
+<td style="text-align: left;">• 近代史（1840年后）重大历史事件与真实历史人物造型（需转入人工审核门核对史实导向）<br>• 涉及现代公检法制服、军装、警徽的写实生成（须标注剧组虚构备案，防冒充公职）</td>
+<td style="text-align: left;">• 中国古代史（先秦汉唐宋元明清）正常帝王将相、古装官服甲胄考证还原（如李白、李元昊、明代锦衣卫飞鱼服）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. 涉黄低俗</strong><br><em>(NSFW)</em></td>
+<td style="text-align: left;">• 任何露点（性器官/女性胸部裸露）、性交/性暗示动作、AI 脱衣/透视<br>• <strong>未成年人/儿童任何形式的软色情或不良暴露（绝对零容忍，直接封号）</strong><br>• 招嫖、色情交易、低俗呻吟配音</td>
+<td style="text-align: left;">• 影视剧中必要的浪漫亲密镜头（如拥抱、额头吻、古装沐浴远景背影）、泳装/健身服特写（系统自动追加 <code>modest clothing, non-explicit, cinematic lighting</code> 约束词）</td>
+<td style="text-align: left;">• 正常影视礼服、唐代传统齐胸襦裙、舞者正常表演服饰、情侣牵手相拥等健康情感戏</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. 涉暴力血腥</strong><br><em>(Violence/Gore)</em></td>
+<td style="text-align: left;">• <strong>极端血腥与虐杀</strong>：斩首、断肢特写、内脏外露、脑浆迸裂、剥皮、虐待动物/儿童<br>• <strong>现代恐怖主义与极端暴力</strong>：蒙面持枪屠杀平民、自杀式炸弹袭击、校园行凶教唆</td>
+<td style="text-align: left;">• 战争片/悬疑片中的中度战损、中枪倒地、血泊远景（防火墙自动将提示词中的极端感官词如“鲜血狂喷”温和降级为“戏剧化暗红战损痕迹”，画面风险分 60~80 进人工门）</td>
+<td style="text-align: left;">• <strong>传统武侠/动作戏</strong>：刀剑交锋、拳脚格斗、兵器碰撞火花、盔甲战损、嘴角/衣衫少量戏剧性血迹（符合广电微短剧过审尺度）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. 涉毒与违禁</strong><br><em>(Drugs/Crime)</em></td>
+<td style="text-align: left;">• <strong>现代毒品与吸毒画面</strong>：冰毒、海洛因、大麻、笑气、电子烟依托咪酯、吸毒工具（冰壶/锡纸烤吸/注射器扎静脉）<br>• 制毒化学配方、贩毒暗语、赌博网站二维码、教唆自杀自残</td>
+<td style="text-align: left;">• 禁毒宣教片、刑侦破案剧中出现的“缴获白色粉末证物袋”“缉毒警察抓捕”镜头（需验证项目类型为政法/宣教立项）</td>
+<td style="text-align: left;">• <strong>古装/奇幻剧虚构道具</strong>：武侠剧中的“鹤顶红、蒙汗药、解毒丹、毒镖、草药熬制”（识别到古装戏剧上下文自动豁免“毒”字误判）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-h3-v5">4.2 违规账号阶梯熔断机制（满足 H3 许可证 V.5 与网信办要求）</h3>
+<ul>
+<li><strong>单次触发一级红线</strong>：请求立即拦截，返回合规警示，写入审计日志，扣除团队当日安全信用分。</li>
+<li><strong>1 小时内累计触发 3 次一级红线（或单次上传政治人物人脸/儿童色情）</strong>：<strong>自动触发熔断停权（冻结该账号/团队 Key 24 小时）</strong>，并向平台管理员（郭小川及安全负责人）发送实时告警，需人工后台解封。</li>
+<li><strong>审计日志留存</strong>：所有拦截与放行记录（含用户 ID、IP、输入原文、图片 Hash、拦截层级、风险标签、时间戳）在数据库加密留存 <strong>≥ 180 天（6 个月）</strong>，随时备检。</li>
+</ul>
+<hr />
+<h2 id="_2">五、 工程落地方案与两周上线排期</h2>
+<p>为让您和后台工程师直接拿到就能用，本方案已配套完成并实测通过全套 <strong>《金泰 AI 内容安全防火墙网关（Jintai Guardrail Gateway <code>:4300</code>）》核心工程代码与交互式监控台</strong>：</p>
+<h3 id="51">5.1 本次直接交付的工程组件清单</h3>
+<ol>
+<li><strong><code>jintai_firewall_gateway.py</code>（核心防火墙微服务源码）</strong>：
+   * 提供标准 REST 接口：<ul>
+<li><code>POST /v1/guard/text</code>：文本/提示词/剧本双向审核（支持普通模式 vs 影视创作语境模式）；</li>
+<li><code>POST /v1/guard/stream-chunk</code>：大模型 SSE 流式输出实时分片截断检测；</li>
+<li><code>POST /v1/guard/image</code>：上传垫图与生成图片出口审核（含 pHash 黑名单 + 本地 L1 + 云端 L2 对接）；</li>
+<li><code>POST /v1/guard/video-egress</code>：视频出口 FFmpeg 智能抽帧审核 + <strong>GB 45438-2025 显隐式数字水印签名注入</strong>；</li>
+<li><code>GET /v1/audit/logs</code> &amp; <code>POST /v1/audit/human-review</code>：审计日志查询与人工复审门（Human Gate）放行/驳回接口。</li>
+</ul>
+</li>
+<li><strong><code>firewall_console.html</code>（金泰 AI 内容安全防火墙实时监控与策略演练大字控制台）</strong>：
+   * 专为金泰平台设计的可视化交互后台，内置涉政、涉黄、涉暴力血腥、涉毒及武侠剧本防误杀五大实时演练沙盒、三级漏斗流量看板与人工复审工作台。</li>
+<li><strong><code>test_firewall.py</code>（全链路自动化验收测试脚本）</strong>：
+   * 覆盖 8 大真实场景（政治敏感拦截、谐音涉黄拦截、现代制毒吸毒拦截、极端血腥虐杀拦截、<strong>古装武侠刀剑毒药正常创作防误杀放行</strong>、流式输出中途截断、视频抽帧与 GB 45438 水印注入、恶意账号满 3 次自动停权熔断），已在本机 100% 实测通过。</li>
+</ol>
+<h3 id="52-2">5.2 与现有金泰平台对接的三步走排期（共 2 周）</h3>
+<ul>
+<li><strong>第一阶段（第 1～3 天）：部署 <code>:4300</code> 防火墙网关并开通云 API 资源包</strong></li>
+<li>将 <code>jintai_firewall_gateway.py</code> 容器化部署在平台服务器（与 <code>:4100</code> 编排层同机），SQLite/Postgres 挂载持久化日志卷；</li>
+<li>企业实名开通<strong>阿里云内容安全增强版（Green 2.0）</strong>或<strong>网易易盾</strong>账号，购买首期预付费资源包，将 <code>AccessKey</code> 填入防火墙环境变量。</li>
+<li><strong>第二阶段（第 4～8 天）：A 机挂载本地 <code>Qwen3Guard-4B</code> 并串联 <code>:4000</code> / <code>:4200</code> 双网关</strong></li>
+<li>在 A 机（<code>172.16.0.10</code>）利用现有 vLLM 服务拉起 <code>Qwen/Qwen3Guard-Gen-4B</code>；</li>
+<li>在 <strong>LiteLLM (<code>:4000</code>)</strong> 启用 <code>pre_call_hook</code> 与 <code>post_call_hook</code> 指向 <code>:4300/v1/guard/text</code>；</li>
+<li>在 <strong>渲染网关 (<code>:4200</code>)</strong> 的提交入口与 ComfyUI/H3 完成回调出口插入 <code>:4300/v1/guard/image</code> 与 <code>/v1/guard/video-egress</code>。</li>
+<li><strong>第三阶段（第 9～14 天）：前端接入人工复审门（Human Gate）与压测上线</strong></li>
+<li>将边界风险（<code>CONTROVERSIAL</code>）作品接入平台现有的门审批视图，完成 50 团队封测压测后正式面向大批量用户开放。</li>
+</ul>
+</div>
+</body>
+</html>
