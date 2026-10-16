@@ -69,7 +69,7 @@ body {
   .sheet { padding: 16px 14px 40px; }
   table { display: block; overflow-x: auto; font-size: 15pt; }
 }
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: SimSun, "宋体", serif;
   font-weight: 900;
   color: #1b1b1b;
@@ -94,6 +94,11 @@ h3 {
   margin: 7mm 0 3mm;
   color: #c8161e;
 }
+h4 {
+  font-size: 20pt;
+  margin: 5mm 0 2.5mm;
+  color: #1b1b1b;
+}
 p { margin: 0 0 4mm; }
 blockquote {
   margin: 5mm 0;
@@ -109,7 +114,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   margin: 5mm 0;
-  font-size: 18.5pt;
+  font-size: 18pt;
   line-height: 1.5;
   page-break-inside: auto;
   background: #fff;
@@ -132,7 +137,7 @@ td {
 tr:nth-child(even) td { background: #fbfaf8; }
 code {
   font-family: "Microsoft YaHei", Consolas, monospace;
-  font-size: 18.5pt;
+  font-size: 18pt;
   background: #f2efe9;
   padding: 1px 6px;
   border-radius: 4px;
@@ -229,7 +234,6 @@ strong { color: #a01118; }
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#c8161e"/>
     </marker>
   </defs>
-  <!-- 顶部：外部用户与编排层 -->
   <rect x="40" y="20" width="330" height="64" rx="8" fill="#ffffff" stroke="#6b6b6b" stroke-width="2"/>
   <text x="205" y="48" font-family="Microsoft YaHei" font-size="18" font-weight="bold" text-anchor="middle" fill="#1b1b1b">外部创作者 / 500 团队浏览器</text>
   <text x="205" y="72" font-family="Microsoft YaHei" font-size="14" text-anchor="middle" fill="#555">HTTPS 网页端 / API 接入 (无需安装客户端)</text>
@@ -246,26 +250,21 @@ strong { color: #a01118; }
   <line x1="620" y1="84" x2="620" y2="128" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
   <text x="632" y="112" font-family="Microsoft YaHei" font-size="14" font-weight="bold" fill="#c8161e">②③④ 出门安检 (Egress Guard)</text>
 
-  <!-- 核心防火墙大框 -->
   <rect x="40" y="132" width="780" height="256" rx="10" fill="#fff5f5" stroke="#c8161e" stroke-width="3"/>
   <text x="430" y="164" font-family="Microsoft YaHei" font-size="21" font-weight="bold" text-anchor="middle" fill="#c8161e">🛡️ 金泰 AI 内容安全防火墙网关 (Jintai Guardrail Gateway :4300)</text>
 
-  <!-- L0 -->
   <rect x="65" y="180" width="730" height="56" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
   <text x="85" y="205" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L0 极速规则层 (&lt;2ms, 0成本)】拦截 60% 流量</text>
   <text x="85" y="227" font-family="Microsoft YaHei" font-size="14" fill="#333">AC自动机黑词库 + 拼音/谐音/拆字还原 + 图像指纹 pHash 黑名单 + 金泰影视创作语境分级豁免</text>
 
-  <!-- L1 -->
   <rect x="65" y="246" width="730" height="56" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
   <text x="85" y="271" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L1 本地 AI 护栏层 (&lt;50ms, 0 API费)】拦截 30% 流量（跑在 A 机 172.16.0.10 vLLM :8000）</text>
   <text x="85" y="293" font-family="Microsoft YaHei" font-size="14" fill="#333">阿里开源 Qwen3Guard-Gen/Stream-4B (防语义越狱) + 本地轻量 NSFW/血腥视觉初筛 (过滤内部草稿废片)</text>
 
-  <!-- L2 -->
   <rect x="65" y="312" width="730" height="58" rx="6" fill="#ffffff" stroke="#c8161e" stroke-width="1.5"/>
   <text x="85" y="337" font-family="Microsoft YaHei" font-size="16" font-weight="bold" fill="#a01118">【L2 权威云端合规终审层 (阿里云内容安全 Green 2.0 / 网易易盾资源包)】终审 10% 出口有效流量</text>
   <text x="85" y="359" font-family="Microsoft YaHei" font-size="14" fill="#333">国家级动态涉政人物人脸底库 + 最新敏感时政词库 + 暴恐违禁权威复核 + 6个月法定尽职免责回执日志</text>
 
-  <!-- 底部：双网关与水印出口 -->
   <line x1="250" y1="388" x2="250" y2="432" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
   <line x1="630" y1="388" x2="630" y2="432" stroke="#c8161e" stroke-width="2.5" marker-end="url(#arrow)"/>
 
@@ -457,6 +456,106 @@ strong { color: #a01118; }
 <li><strong>第三阶段（第 9～14 天）：前端接入人工复审门（Human Gate）与压测上线</strong></li>
 <li>将边界风险（<code>CONTROVERSIAL</code>）作品接入平台现有的门审批视图，完成 50 团队封测压测后正式面向大批量用户开放。</li>
 </ul>
+<hr />
+<h2 id="_3">六、 实操落地清单：我们自己做什么？跟阿里大区经理怎么谈？一年花多少钱？</h2>
+<h3 id="61-850">6.1 我们金泰团队自己能做什么？（占总工作量的 85%，0 外部软件采购费）</h3>
+<p>这套防火墙的核心控制权完全掌握在我们自己手里，<strong>不需要买任何昂贵的硬件防火墙或商业私有化软件</strong>，我们自己的工程师（配合 AI 写好的现成代码）直接完成以下 <strong>5 件事</strong>：</p>
+<ol>
+<li><strong>部署 <code>:4300</code> 防火墙网关微服务（代码已写好）</strong>：
+   * 直接把本次交付的 <code>jintai_firewall_gateway.py</code> 挂到金泰平台服务器上，拦在 <code>:4100</code> 编排层与 <code>:4000</code>（LiteLLM）/ <code>:4200</code>（渲染网关）中间。</li>
+<li><strong>维护金泰专属「L0 极速词库 + 影视创作语境白名单」</strong>：
+   * 拼音谐音去噪、古装武侠/历史剧正常刀剑与毒药道具豁免、感官词温和改写（如把“鲜血狂喷”自动改成“暗红战损血迹飞溅”），<strong>100% 由我们自己的代码在本地内存毫秒级完成</strong>。</li>
+<li><strong>在 A 机（<code>172.16.0.10</code>）免费跑 L1 本地安全模型（0 成本拦掉 90% 废片与草稿）</strong>：
+   * 从阿里魔搭社区（ModelScope）免费下载开源的 <strong><code>Qwen/Qwen3Guard-Gen-4B</code></strong>（Apache 2.0 免费商用协议，仅占约 8GB 显存）和轻量 NSFW 鉴黄小模型，挂在 A 机现有的 vLLM 服务上。
+   * 创作者在平台上反复改剧本、抽卡生图产生的<strong>中间草稿和未选中废片</strong>，全部在 A 机本地免费初筛，<strong>绝不发往阿里云扣费</strong>！</li>
+<li><strong>视频出口本地 FFmpeg 智能抽帧（省掉 80% 视频审核费）</strong>：
+   * 渲染网关在 H3 / Seedance 视频渲染完成后，<strong>不调用阿里云昂贵的视频直审接口</strong>，而是我们自己用 FFmpeg 抽出 <strong>4～5 张关键画面帧（首/中/尾/最大运动帧）</strong>，当成普通图片发给阿里云图片接口终审。</li>
+<li><strong>出口自动打上国家标准水印（GB 45438-2025）+ 账号满 3 次违规自动封禁 24h + 6 个月日志留存</strong>：
+   * 全部由我们自己的网关代码在图片/视频导出时自动写入底层 C2PA/Metadata 签名并落盘数据库。</li>
+</ol>
+<hr />
+<h3 id="62">6.2 联系阿里大区经理，具体怎么跟他说？（防忽悠谈判话术）</h3>
+<blockquote>
+<p><strong>⚠️ 谈判核心防坑指南</strong>：
+云厂商大区销售一听说你要做“AI 平台防火墙”，最喜欢推销三样高溢价产品：<strong>① 云原生 WAF 大模型安全防火墙包年（8～15 万/年）</strong>、<strong>② 内容安全大模型版 VL 接口（扣点贵 3 倍）</strong>、<strong>③ 视频点播直审套餐（按分钟计费极贵）</strong>。
+<strong>这三样我们统统不要！</strong> 因为我们自己已经在本地做好了网关、A 机 <code>Qwen3Guard</code> 语义护栏和 FFmpeg 视频抽帧，<strong>我们只需要借用阿里云底层的“国家级动态涉政人物人脸库 + 最新时政黑词库 + 通用基线图片/文本接口”做最后 10% 出口成品的权威合规兜底！</strong></p>
+</blockquote>
+<h4 id="_4">📋 直接发给阿里大区经理的沟通话术（可直接复制）</h4>
+<blockquote>
+<p><strong>“某总你好，我们金泰 AI 影视创作平台近期准备向创作者团队批量开放。我们在自己的 GPU 集群上已经搭建好了前置内容过滤网关、开源 Qwen3Guard 护栏和视频本地关键帧抽取系统。</strong>
+<strong>现在我们需要采购阿里云【内容安全增强版（2.0 版）通用容量预付费资源包】，专门用于平台最终出口图片和文本的涉政人脸、暴恐违禁和色情基线终审。</strong>
+<strong>请帮我们按以下明确需求出个大客户商务特批底价：</strong>
+1. <strong>只要【内容安全增强版（2.0）通用容量资源包】（1 年有效期，支持跨文本、图片按系数抵扣）；不需要 WAF 大模型安全网关包年，也不需要视频流直审包。</strong>
+2. <strong>接口我们只调两个标准基线接口：文本审核通用版 <code>text_standard</code>（抵扣系数 1）和图片审核通用/专业基线版 <code>image_standard</code> / <code>baselineCheck</code>（抵扣系数 2，含涉政敏感人脸、暴恐、色情识别）。</strong>
+3. <strong>请分别报一下【1,000 万次/年（起步包）】、【5,000 万次/年（主力包）】和【1 亿次/年】三档资源包的大区商务特批折扣价（我们需要签订含人民币增值税专用发票的对公合同，并请确认资源包用完前的预警机制及续购同折扣锁定条款）。”</strong></p>
+</blockquote>
+<h4 id="3">🛡️ 见招拆招：如果阿里经理追问这 3 个问题，怎么回？</h4>
+<ul>
+<li><strong>如果他问：“你们审 AI 生成内容，为什么不买我们的 <code>image_vl_standard</code>（大模型图片审核，扣 6 点）或 <code>llm_query_moderation</code>（大模型文本审核，扣 2 点）？”</strong></li>
+<li><strong>标准回答</strong>：“大模型语义理解和提示词防越狱，我们已经在自己 8×H100 集群上部署了你们阿里通义开源的 <code>Qwen3Guard</code> 模型做完初筛了；调你们云端 API 主要是为了对齐<strong>最新涉政人物人脸底库和标准涉黄涉暴基线</strong>，用 <code>text_standard</code>（系数 1）和 <code>image_standard</code>（系数 2）完全够用，后续个别复杂样本再按需调高级接口。”</li>
+<li><strong>如果他问：“你们有 AI 视频生成业务，为什么不买视频审核流量包？”</strong></li>
+<li><strong>标准回答</strong>：“我们是 AI 镜头生成平台，单条镜头 5～15 秒且重掷率高。我们已经在渲染网关本地用 FFmpeg 做好了自适应关键帧抽取（每条成片抽 4～5 张关键帧）和音轨转文字，直接走图片接口和文本接口并发送审，响应更快（<code>&lt;200ms</code>），不需要走异步视频流接口。”</li>
+<li><strong>如果他问：“要不要顺便买阿里云的 AIGC 数字水印服务？”</strong></li>
+<li><strong>标准回答</strong>：“不用，GB 45438-2025 要求的显式水印与底层隐式元数据 HMAC 溯源签名，我们网关已经自研集成完毕了。”</li>
+</ul>
+<hr />
+<h3 id="63-2026">6.3 估计一年花多少钱？（基于阿里云 2026 官方刊例价与大区折扣精算）</h3>
+<p>根据阿里云<strong>内容安全增强版（2.0）</strong>最新官方计费规则：
+* <strong>文本通用审核 (<code>text_standard</code>)</strong>：官网按量价 <strong>7.5 元 / 万次</strong>（资源包抵扣 <strong>1 次/条</strong>）；
+* <strong>图片通用审核 (<code>image_standard</code>)</strong>：官网按量价 <strong>15 元 / 万张</strong>（资源包抵扣 <strong>2 次/张</strong>）；
+* <strong>大区经理商务权限</strong>：预付费资源包本身比按量付费便宜约 20%～30%，找阿里大区经理走企业大客户特批通常还能再拿 <strong>7 折～8 折</strong>（综合折算下来，<strong>每 1,000 万次通用容量包的实际成交价在 4,200 元～5,500 元左右</strong>）。</p>
+<p>结合我们的 <strong>“L0/L1 本地免费拦截 90% 废片 + L2 阿里云只审最终入库/出口成品”</strong> 架构，按金泰平台不同用户规模，<strong>全年给阿里云交的钱</strong>精算如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">平台开放阶段</th>
+<th style="text-align: left;">在线规模与月产量</th>
+<th style="text-align: left;">全年需送阿里云终审的有效量<br><em>(已由本地过滤掉草稿与废片)</em></th>
+<th style="text-align: left;">折合阿里云通用资源包点数<br><em>(文本×1点 + 图片/抽帧×2点)</em></th>
+<th style="text-align: left;">官网按量原价<br><em>(不买包裸跑)</em></th>
+<th style="text-align: left;">官网资源包标价</th>
+<th style="text-align: left;"><strong>找阿里大区经理特批后<br>预计全年真实花费</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>第一阶段：起步封测期</strong><br><em>(前 3～6 个月 / 50～100 团队)</em></td>
+<td style="text-align: left;">300～600 人在线<br>月产成片约 2,500 分钟</td>
+<td style="text-align: left;">• 有效文本约 400 万条/年<br>• 有效成图+视频抽帧约 300 万张/年</td>
+<td style="text-align: left;"><strong>1,000 万次 / 年</strong><br><em>(买 1 个 1000 万次包)</em></td>
+<td style="text-align: left;">约 7,500 元/年</td>
+<td style="text-align: left;">约 5,800 元/年</td>
+<td style="text-align: left;"><strong>约 4,000 ～ 4,800 元 / 年</strong><br><em>(月均不到 400 元)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第二阶段：主力运营期</strong><br><em>(500 团队 / 3,000 创作者)</em></td>
+<td style="text-align: left;"><strong>3,000 人持续在线</strong><br>月产成片 13,000 分钟</td>
+<td style="text-align: left;">• 有效文本约 1,800 万条/年<br>• 有效成图+视频抽帧约 1,600 万张/年</td>
+<td style="text-align: left;"><strong>5,000 万次 / 年</strong><br><em>(买 1 个 5000 万次包)</em></td>
+<td style="text-align: left;">约 3.75 万元/年</td>
+<td style="text-align: left;">约 2.5 万元/年</td>
+<td style="text-align: left;"><strong>约 1.8 万 ～ 2.2 万元 / 年</strong><br><em>(若全量勾选涉政高级人脸 pro 系数4，约 </em><em>3.6～4.5 万/年</em><em>)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>第三阶段：公网大规模放开</strong><br><em>(10,000+ 外部活跃用户)</em></td>
+<td style="text-align: left;">10,000+ 人在线<br>月产成片 27,000+ 分钟</td>
+<td style="text-align: left;">• 有效文本约 4,000 万条/年<br>• 有效成图+视频抽帧约 3,000 万张/年</td>
+<td style="text-align: left;"><strong>1 亿次 / 年</strong><br><em>(买 2 个 5000 万包或 1 亿包)</em></td>
+<td style="text-align: left;">约 7.5 万元/年</td>
+<td style="text-align: left;">约 4.8 万元/年</td>
+<td style="text-align: left;"><strong>约 3.5 万 ～ 4.2 万元 / 年</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">💡 老板拍板最省钱买法（分步走，不压资金）：</h4>
+<ol>
+<li><strong>现在立刻上线（首期投入仅需约 4,500 元）</strong>：
+   * 先找阿里大区经理谈定全年框架折扣，<strong>首期只先买 1 个「1,000 万次内容安全增强版通用资源包」（约 4,000～5,000 元）</strong>，并让他赠送新客户试用额度。
+   * 这 4,000 多块钱足够支撑平台开放初期 <strong>50～100 个创作团队跑大半年</strong>！</li>
+<li><strong>等 3,000 人满负荷跑起来后（全年封顶也就 2 万～4.5 万元）</strong>：
+   * 在阿里云后台设置“余量低于 15% 自动短信告警”，快用完时再按谈好的大客户折扣叠加购买 <strong>5,000 万次包</strong>。
+   * 加上我们自己 0 成本的 <code>:4300</code> 网关和 A 机 <code>Qwen3Guard-4B</code> 初筛，<strong>全年总外部开销死死钉在 2 万～4.5 万元人民币以内</strong>（比不设本地漏斗无脑全量调云 API 每年省下 20 多万元）！</li>
+</ol>
 </div>
 </body>
 </html>
